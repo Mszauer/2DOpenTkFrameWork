@@ -11,6 +11,8 @@ namespace ConsoleApplication1 {
         static int currentRotation = 0;
         public static void Initialize(object sender, EventArgs e) {
             robot = TextureManager.Instance.LoadTexture("Assets/machine.png");
+            GraphicsManager.Instance.Initialize(Window);
+            TextureManager.Instance.Initialize(Window);
         }
         public static void Update(object sender, FrameEventArgs e) {
 
@@ -30,6 +32,7 @@ namespace ConsoleApplication1 {
             TextureManager.Instance.UnloadTexture(robot);
             robot = -1;
             TextureManager.Instance.Shutdown();
+            GraphicsManager.Instance.Shutdown();
         }
         [STAThread]
         public static void Main() {
