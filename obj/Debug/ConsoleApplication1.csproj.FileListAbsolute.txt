@@ -12,3 +12,10 @@ C:\Users\Martin\Documents\2DOpenTkFrameWork\obj\Debug\ConsoleApplication1.pdb
 C:\Users\Martin Deskto\Documents\2DOpenTkFrameWork\bin\Debug\ConsoleApplication1.exe.config
 C:\Users\Martin Deskto\Documents\2DOpenTkFrameWork\obj\Debug\ConsoleApplication1.exe
 C:\Users\Martin Deskto\Documents\2DOpenTkFrameWork\obj\Debug\ConsoleApplication1.pdb
+C:\Users\Martin Deskto\Documents\2DOpenTkFrameWork\obj\Debug\ConsoleApplication1.csprojResolveAssemblyReference.cache
+C:\Users\Martin Deskto\Documents\2DOpenTkFrameWork\bin\Debug\ConsoleApplication1.exe
+C:\Users\Martin Deskto\Documents\2DOpenTkFrameWork\bin\Debug\ConsoleApplication1.pdb
+C:\Users\Martin Deskto\Documents\2DOpenTkFrameWork\bin\Debug\NAudio.dll
+C:\Users\Martin Deskto\Documents\2DOpenTkFrameWork\bin\Debug\OpenTK.dll
+C:\Users\Martin Deskto\Documents\2DOpenTkFrameWork\bin\Debug\NAudio.xml
+C:\Users\Martin Deskto\Documents\2DOpenTkFrameWork\bin\Debug\OpenTK.xml
