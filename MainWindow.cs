@@ -28,6 +28,7 @@ namespace ConsoleApplication1 {
             TextureManager.Instance.Draw(texBird, new Point(0, 0), 0.25f);
             TextureManager.Instance.Draw(texBird, new Point(50, 0), 0.5f);
             TextureManager.Instance.Draw(texBird, new Point(170, 30), 0.75f);
+            TextureManager.Instance.Draw(texJack, new Point(0, 288), 1.0f, new Rectangle(0, 200, 256, 312));
 
             GraphicsManager.Instance.SwapBuffers();
         }
