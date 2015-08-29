@@ -7,46 +7,41 @@ using GameFramework;
 namespace ConsoleApplication1 {
     class MainWindow {
         public static OpenTK.GameWindow Window = null; //reference to OpenTK window
-        static int texBird = -1;
-        static int texJack = -1;
-        static int texAku = -1;
-        static int texSwirl = -1;
-        static float swirlAngle = 0.0f;
+        static float currentRotation = 0.0f;
+        static int texRobot = -1;
 
         public static void Initialize(object sender, EventArgs e) {
             GraphicsManager.Instance.Initialize(Window);
             TextureManager.Instance.Initialize(Window);
 
-            texBird = TextureManager.Instance.LoadTexture("Assets/Bird.png");
-            texJack = TextureManager.Instance.LoadTexture("Assets/Jack.png");
-            texAku = TextureManager.Instance.LoadTexture("Assets/Aku.png");
-            texSwirl = TextureManager.Instance.LoadTexture("Assets/Swirl.png");
+            texRobot = TextureManager.Instance.LoadTexture("Assets/machine.png");
         }
         public static void Update(object sender, FrameEventArgs e) {
-            swirlAngle += (float)e.Time * 60f;
-            while (swirlAngle > 360.0f){
-                swirlAngle -= 360.0f;
+            currentRotation += (float)e.Time * 60f;
+            while (currentRotation > 360.0f){
+                currentRotation -= 360.0f;
             }
         }
         public static void Render(object sender, FrameEventArgs e) {
             GraphicsManager.Instance.ClearScreen(Color.CadetBlue);
 
-            TextureManager.Instance.Draw(texAku, new Point(0, 0));
-            TextureManager.Instance.Draw(texBird, new Point(0, 0), 0.25f);
-            TextureManager.Instance.Draw(texBird, new Point(50, 0), 0.5f);
-            TextureManager.Instance.Draw(texBird, new Point(170, 30), 0.75f);
-            TextureManager.Instance.Draw(texJack, new Point(0, 288), 1.0f, new Rectangle(0, 200, 256, 312));
-            TextureManager.Instance.Draw(texSwirl, new Point(300, 450), 0.25f, new Rectangle(0, 0, 512, 512), swirlAngle);
-            TextureManager.Instance.Draw(texSwirl, new Point(275, 325), 0.1f, new Rectangle(0, 0, 512, 512), new Point(0, 0), -swirlAngle);
-
+            TextureManager.Instance.Draw(texRobot, new Point(212, 85), 0.75f, new Rectangle(64, 0, 64, 64));
+            TextureManager.Instance.Draw(texRobot, new Point(172, 85), new PointF(-0.75f, .75f), new Rectangle(64, 0, 64, 64));
+            TextureManager.Instance.Draw(texRobot, new Point(320, 20));
+            TextureManager.Instance.Draw(texRobot, new Point(128, 0), 1.0f, new Rectangle(128, 0, 128, 128));
+            TextureManager.Instance.Draw(texRobot, new Point(168, 31), 0.75f, new Rectangle(0, 64, 64, 64));
+            TextureManager.Instance.Draw(texRobot, new Point(219, 41), 0.75f, new Rectangle(64, 64, 64, 64));
+            TextureManager.Instance.Draw(texRobot, new Point(165, 41), new PointF(-0.75f,0.75f), new Rectangle(64, 64, 64, 64));
+            TextureManager.Instance.Draw(texRobot, new Point(224, 111), new PointF(0.75f, -0.75f), new Rectangle(64, 0, 64, 64));
+            TextureManager.Instance.Draw(texRobot, new Point(159, 111), 0.75f, new Rectangle(64, 0, 64, 64), new Point(0,0),180);
+            TextureManager.Instance.Draw(texRobot, new Point(226, 75), 0.75f, new Rectangle(0, 0, 64, 64), currentRotation);
+            TextureManager.Instance.Draw(texRobot, new Point(157, 75), new PointF(-0.75f, 0.75f), new Rectangle(0, 0, 64, 64), currentRotation);
+            
             GraphicsManager.Instance.SwapBuffers();
         }
         public static void Shutdown(object sender, EventArgs e) {
-            TextureManager.Instance.UnloadTexture(texBird);
-            TextureManager.Instance.UnloadTexture(texJack);
-            TextureManager.Instance.UnloadTexture(texAku);
-            TextureManager.Instance.UnloadTexture(texSwirl);
-            texBird = texAku = texJack = -1;
+            TextureManager.Instance.UnloadTexture(texRobot);
+            texRobot = -1;
             TextureManager.Instance.Shutdown();
             GraphicsManager.Instance.Shutdown();
         }
