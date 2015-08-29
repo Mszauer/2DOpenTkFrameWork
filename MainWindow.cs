@@ -10,6 +10,9 @@ namespace ConsoleApplication1 {
         static int texBird = -1;
         static int texJack = -1;
         static int texAku = -1;
+        static int texSwirl = -1;
+        static float swirlAngle = 0.0f;
+
         public static void Initialize(object sender, EventArgs e) {
             GraphicsManager.Instance.Initialize(Window);
             TextureManager.Instance.Initialize(Window);
@@ -17,9 +20,13 @@ namespace ConsoleApplication1 {
             texBird = TextureManager.Instance.LoadTexture("Assets/Bird.png");
             texJack = TextureManager.Instance.LoadTexture("Assets/Jack.png");
             texAku = TextureManager.Instance.LoadTexture("Assets/Aku.png");
+            texSwirl = TextureManager.Instance.LoadTexture("Assets/Swirl.png");
         }
         public static void Update(object sender, FrameEventArgs e) {
-
+            swirlAngle += (float)e.Time * 60f;
+            while (swirlAngle > 360.0f){
+                swirlAngle -= 360.0f;
+            }
         }
         public static void Render(object sender, FrameEventArgs e) {
             GraphicsManager.Instance.ClearScreen(Color.CadetBlue);
@@ -29,6 +36,8 @@ namespace ConsoleApplication1 {
             TextureManager.Instance.Draw(texBird, new Point(50, 0), 0.5f);
             TextureManager.Instance.Draw(texBird, new Point(170, 30), 0.75f);
             TextureManager.Instance.Draw(texJack, new Point(0, 288), 1.0f, new Rectangle(0, 200, 256, 312));
+            TextureManager.Instance.Draw(texSwirl, new Point(300, 450), 0.25f, new Rectangle(0, 0, 512, 512), swirlAngle);
+            TextureManager.Instance.Draw(texSwirl, new Point(275, 325), 0.1f, new Rectangle(0, 0, 512, 512), new Point(0, 0), -swirlAngle);
 
             GraphicsManager.Instance.SwapBuffers();
         }
@@ -36,6 +45,7 @@ namespace ConsoleApplication1 {
             TextureManager.Instance.UnloadTexture(texBird);
             TextureManager.Instance.UnloadTexture(texJack);
             TextureManager.Instance.UnloadTexture(texAku);
+            TextureManager.Instance.UnloadTexture(texSwirl);
             texBird = texAku = texJack = -1;
             TextureManager.Instance.Shutdown();
             GraphicsManager.Instance.Shutdown();
