@@ -23,7 +23,12 @@ namespace ConsoleApplication1 {
         }
         public static void Render(object sender, FrameEventArgs e) {
             GraphicsManager.Instance.ClearScreen(Color.CadetBlue);
+
             TextureManager.Instance.Draw(texAku, new Point(0, 0));
+            TextureManager.Instance.Draw(texBird, new Point(0, 0), 0.25f);
+            TextureManager.Instance.Draw(texBird, new Point(50, 0), 0.5f);
+            TextureManager.Instance.Draw(texBird, new Point(170, 30), 0.75f);
+
             GraphicsManager.Instance.SwapBuffers();
         }
         public static void Shutdown(object sender, EventArgs e) {
