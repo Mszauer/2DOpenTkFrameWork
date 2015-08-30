@@ -17,8 +17,11 @@ namespace ConsoleApplication1 {
         }
         public static void Update(object sender, FrameEventArgs e) {
             InputManager.Instance.Update();
-            if (InputManager.Instance.MousePressed(OpenTK.Input.MouseButton.Left)) { //what woudl the argument be
+            if (InputManager.Instance.MousePressed(OpenTK.Input.MouseButton.Left)) {
                 mouseCentered = !mouseCentered;
+            }
+            if (mouseCentered) {
+                InputManager.Instance.CenterMouse();
             }
         }
         public static void Render(object sender, FrameEventArgs e) {
@@ -48,7 +51,7 @@ namespace ConsoleApplication1 {
             Window.RenderFrame += new EventHandler<FrameEventArgs>(Render);
             //hook up shutdown callback
             Window.Unload += new EventHandler<EventArgs>(Shutdown);
-
+            Window.VSync = VSyncMode.On;
 
             //set window title and size
             Window.Title = "Game Name";
