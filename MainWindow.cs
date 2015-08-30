@@ -8,13 +8,37 @@ namespace ConsoleApplication1 {
     class MainWindow {
         public static OpenTK.GameWindow Window = null; //reference to OpenTK window
 
-        public static int MouseX { get; }
-        public static int MouseY {get;}
-        public Point MousePosition{get;}
+        public static int MouseX { 
+            get {
+                return InputManager.Instance.MouseX;
+            }
+        }
+        public static int MouseY {
+            get {
+                return InputManager.Instance.MouseY;
+            }
+        }
+        public Point MousePosition{
+            get {
+                return new Point(MouseX, MouseY);
+            }
+        }
 
-        public float MouseDeltaX { get; }
-        public float MouseDeltaY { get; }
-        public PointF MouseDelta { get; }
+        public float MouseDeltaX {
+            get {
+                return InputManager.Instance.MouseDeltaX;
+            }
+        }
+        public float MouseDeltaY {
+            get {
+                return InputManager.Instance.MouseDeltaY;
+            }
+        }
+        public PointF MouseDelta {
+            get {
+                return new PointF(MouseDeltaX, MouseDeltaY);
+            }
+        }
 
         public void SetMousePosition(Point newPos) {
 
