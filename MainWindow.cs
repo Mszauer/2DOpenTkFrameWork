@@ -8,6 +8,7 @@ namespace ConsoleApplication1 {
     class MainWindow {
         public static OpenTK.GameWindow Window = null; //reference to OpenTK window
 
+        public static bool mouseCentered = false;
         public static int MouseX { 
             get {
                 return InputManager.Instance.MouseX;
@@ -18,23 +19,23 @@ namespace ConsoleApplication1 {
                 return InputManager.Instance.MouseY;
             }
         }
-        public Point MousePosition{
+        public static Point MousePosition{
             get {
                 return new Point(MouseX, MouseY);
             }
         }
 
-        public float MouseDeltaX {
+        public static float MouseDeltaX {
             get {
                 return InputManager.Instance.MouseDeltaX;
             }
         }
-        public float MouseDeltaY {
+        public static float MouseDeltaY {
             get {
                 return InputManager.Instance.MouseDeltaY;
             }
         }
-        public PointF MouseDelta {
+        public static PointF MouseDelta {
             get {
                 return new PointF(MouseDeltaX, MouseDeltaY);
             }
@@ -79,12 +80,17 @@ namespace ConsoleApplication1 {
         }
         public static void Update(object sender, FrameEventArgs e) {
             InputManager.Instance.Update();
+            if (InputManager.Instance.LeftPressed) { //what woudl the argument be
+                mouseCentered = !mouseCentered;
+            }
         }
         public static void Render(object sender, FrameEventArgs e) {
             int FPS = System.Convert.ToInt32(1.0 / e.Time);
             GraphicsManager.Instance.DrawString("FPS: " + FPS, new Point(5, 5), Color.Black);
             GraphicsManager.Instance.DrawString("FPS: " + FPS, new Point(4, 4), Color.White);
-            GraphicsManager.Instance.DrawString("Mouse X: " + MouseX + " Y: " + MouseY, new Point(8,8), Color.Black);
+            GraphicsManager.Instance.DrawString("Mouse X: " + MouseX + " Y: " + MouseY, new Point(20,20), Color.Black);
+            GraphicsManager.Instance.DrawString("Mouse dX: " + MouseDeltaX + "Y: " + MouseDeltaY, new Point(20,40), Color.Black);
+            GraphicsManager.Instance.DrawString("Forced center: " + mouseCentered, new Point(20, 60), Color.Black);
 
             GraphicsManager.Instance.SwapBuffers();
         }
