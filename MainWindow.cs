@@ -24,20 +24,28 @@ namespace ConsoleApplication1 {
         }
 
         public bool MouseDown(OpenTK.Input.MouseButton button) {
-            
-            if (button == MouseButton.Left|| button == MouseButton.Right || button == MouseButton.Middle) {
+            if (InputManager.Instance.MouseDown(button)) {
                 return true;
             }
             return false;
         }
         public bool MouseUp(OpenTK.Input.MouseButton button) {
-
+            if (InputManager.Instance.MouseUp(button)) {
+                return true;
+            }
+            return false;
         }
         public bool MousePressed(OpenTK.Input.MouseButton button) {
-
+            if (InputManager.Instance.MousePressed(button)) {
+                return true;
+            }
+            return false;
         }
         public bool MouseReleased(OpenTK.Input.MouseButton button) {
-
+            if (InputManager.Instance.MouseReleased(button)) {
+                return true;
+            }
+            return false;
         }
 
         public static void Initialize(object sender, EventArgs e) {
