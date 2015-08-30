@@ -3,12 +3,15 @@ using OpenTK;
 using OpenTK.Input;
 using System.Drawing;
 using GameFramework;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace ConsoleApplication1 {
     class MainWindow {
         public static OpenTK.GameWindow Window = null; //reference to OpenTK window
-
-        public static bool mouseCentered = false;
+        
+        static List<OpenTK.Input.Key> input = new List<OpenTK.Input.Key>();
+        static RectangleF position = new RectangleF(100f, 100f, 20f, 20f);
 
         public static void Initialize(object sender, EventArgs e) {
             GraphicsManager.Instance.Initialize(Window);
@@ -16,21 +19,33 @@ namespace ConsoleApplication1 {
 
         }
         public static void Update(object sender, FrameEventArgs e) {
+
+            input.Clear();
+            input.AddRange(InputManager.Instance.GetAllKeysDown());
+            if (InputManager.Instance.KeyDown(OpenTK.Input.Key.Up) || InputManager.Instance.KeyDown(OpenTK.Input.Key.W)) {
+                position.Y -= (float)(50f * e.Time);
+            }
+            if (InputManager.Instance.KeyDown(OpenTK.Input.Key.Down) || InputManager.Instance.KeyDown(OpenTK.Input.Key.S)) {
+                position.Y += (float)(50f * e.Time);
+            }
+            if (InputManager.Instance.KeyDown(OpenTK.Input.Key.Right) || InputManager.Instance.KeyDown(OpenTK.Input.Key.D)) {
+                position.X += (float)(50f * e.Time);
+            }
+            if (InputManager.Instance.KeyDown(OpenTK.Input.Key.Left) || InputManager.Instance.KeyDown(OpenTK.Input.Key.A)) {
+                position.X -= (float)(50f * e.Time);
+            }
+
             InputManager.Instance.Update();
-            if (InputManager.Instance.MousePressed(OpenTK.Input.MouseButton.Left)) {
-                mouseCentered = !mouseCentered;
-            }
-            if (mouseCentered) {
-                InputManager.Instance.CenterMouse();
-            }
         }
         public static void Render(object sender, FrameEventArgs e) {
-            int FPS = System.Convert.ToInt32(1.0 / e.Time);
-            GraphicsManager.Instance.DrawString("FPS: " + FPS, new Point(5, 5), Color.Black);
-            GraphicsManager.Instance.DrawString("FPS: " + FPS, new Point(4, 4), Color.White);
-            GraphicsManager.Instance.DrawString("Mouse X: " + InputManager.Instance.MouseX + " Y: " + InputManager.Instance.MouseY, new Point(20,20), Color.Black);
-            GraphicsManager.Instance.DrawString("Mouse dX: " + InputManager.Instance.MouseDeltaX + "Y: " + InputManager.Instance.MouseDeltaY, new Point(20, 40), Color.Black);
-            GraphicsManager.Instance.DrawString("Forced center: " + mouseCentered, new Point(20, 60), Color.Black);
+            GraphicsManager.Instance.ClearScreen(Color.CadetBlue);
+
+            GraphicsManager.Instance.DrawRect(position, Color.Red);
+            GraphicsManager.Instance.DrawString("Keys down: ", new Point(0, 0), Color.Black);
+            GraphicsManager.Instance.DrawString("Space key is up: " + InputManager.Instance.KeyDown(OpenTK.Input.Key.Space), new Point(20, 20), Color.Black);
+            GraphicsManager.Instance.DrawString("Space key is down: " + InputManager.Instance.KeyUp(OpenTK.Input.Key.Space), new Point(20, 40), Color.Black);
+            GraphicsManager.Instance.DrawString("Space key is pressed: " + InputManager.Instance.KeyPressed(OpenTK.Input.Key.Space), new Point(20, 60), Color.Black);
+            GraphicsManager.Instance.DrawString("Space key is released: " + InputManager.Instance.KeyReleased(OpenTK.Input.Key.Space), new Point(20, 80), Color.Black);
 
             GraphicsManager.Instance.SwapBuffers();
         }
