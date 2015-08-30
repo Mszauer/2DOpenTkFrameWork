@@ -8,11 +8,7 @@ namespace ConsoleApplication1 {
     class MainWindow {
         public static OpenTK.GameWindow Window = null; //reference to OpenTK window
 
-        public static int MouseX {
-            get {
-                return;
-            }
-        }
+        public static int MouseX { get; }
         public static int MouseY {get;}
         public Point MousePosition{get;}
 
@@ -20,13 +16,29 @@ namespace ConsoleApplication1 {
         public float MouseDeltaY { get; }
         public PointF MouseDelta { get; }
 
-        public void SetMousePosition(Point newPos);
-        public void CenterMouse();
+        public void SetMousePosition(Point newPos) {
 
-        public bool MouseDown(OpenTK.Input.MouseButton button);
-        public bool MouseUp(OpenTK.Input.MouseButton button);
-        public bool MousePressed(OpenTK.Input.MouseButton button);
-        public bool MouseReleased(OpenTK.Input.MouseButton button);
+        }
+        public void CenterMouse() {
+
+        }
+
+        public bool MouseDown(OpenTK.Input.MouseButton button) {
+            
+            if (button == MouseButton.Left|| button == MouseButton.Right || button == MouseButton.Middle) {
+                return true;
+            }
+            return false;
+        }
+        public bool MouseUp(OpenTK.Input.MouseButton button) {
+
+        }
+        public bool MousePressed(OpenTK.Input.MouseButton button) {
+
+        }
+        public bool MouseReleased(OpenTK.Input.MouseButton button) {
+
+        }
 
         public static void Initialize(object sender, EventArgs e) {
             GraphicsManager.Instance.Initialize(Window);
