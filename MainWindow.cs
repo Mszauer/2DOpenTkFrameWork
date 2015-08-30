@@ -9,69 +9,6 @@ namespace ConsoleApplication1 {
         public static OpenTK.GameWindow Window = null; //reference to OpenTK window
 
         public static bool mouseCentered = false;
-        public static int MouseX { 
-            get {
-                return InputManager.Instance.MouseX;
-            }
-        }
-        public static int MouseY {
-            get {
-                return InputManager.Instance.MouseY;
-            }
-        }
-        public static Point MousePosition{
-            get {
-                return new Point(MouseX, MouseY);
-            }
-        }
-
-        public static float MouseDeltaX {
-            get {
-                return InputManager.Instance.MouseDeltaX;
-            }
-        }
-        public static float MouseDeltaY {
-            get {
-                return InputManager.Instance.MouseDeltaY;
-            }
-        }
-        public static PointF MouseDelta {
-            get {
-                return new PointF(MouseDeltaX, MouseDeltaY);
-            }
-        }
-
-        public void SetMousePosition(Point newPos) {
-            InputManager.Instance.SetMousePosition(newPos);
-        }
-        public void CenterMouse() {
-            InputManager.Instance.CenterMouse();
-        }
-
-        public bool MouseDown(OpenTK.Input.MouseButton button) {
-            if (InputManager.Instance.MouseDown(button)) {
-                return true;
-            }
-            return false;
-        }
-        public bool MouseUp(OpenTK.Input.MouseButton button) {
-            if (InputManager.Instance.MouseUp(button)) {
-                return true;
-            }
-            return false;
-        }
-        public bool MousePressed(OpenTK.Input.MouseButton button) {
-            if (InputManager.Instance.MousePressed(button)) {
-                return true;
-            }
-            return false;
-        }
-        public bool MouseReleased(OpenTK.Input.MouseButton button) {
-            if (InputManager.Instance.MouseReleased(button)) {
-                return true;
-            }
-            return false;
-        }
 
         public static void Initialize(object sender, EventArgs e) {
             GraphicsManager.Instance.Initialize(Window);
@@ -80,7 +17,7 @@ namespace ConsoleApplication1 {
         }
         public static void Update(object sender, FrameEventArgs e) {
             InputManager.Instance.Update();
-            if (InputManager.Instance.LeftPressed) { //what woudl the argument be
+            if (InputManager.Instance.MousePressed(OpenTK.Input.MouseButton.Left)) { //what woudl the argument be
                 mouseCentered = !mouseCentered;
             }
         }
@@ -88,8 +25,8 @@ namespace ConsoleApplication1 {
             int FPS = System.Convert.ToInt32(1.0 / e.Time);
             GraphicsManager.Instance.DrawString("FPS: " + FPS, new Point(5, 5), Color.Black);
             GraphicsManager.Instance.DrawString("FPS: " + FPS, new Point(4, 4), Color.White);
-            GraphicsManager.Instance.DrawString("Mouse X: " + MouseX + " Y: " + MouseY, new Point(20,20), Color.Black);
-            GraphicsManager.Instance.DrawString("Mouse dX: " + MouseDeltaX + "Y: " + MouseDeltaY, new Point(20,40), Color.Black);
+            GraphicsManager.Instance.DrawString("Mouse X: " + InputManager.Instance.MouseX + " Y: " + InputManager.Instance.MouseY, new Point(20,20), Color.Black);
+            GraphicsManager.Instance.DrawString("Mouse dX: " + InputManager.Instance.MouseDeltaX + "Y: " + InputManager.Instance.MouseDeltaY, new Point(20, 40), Color.Black);
             GraphicsManager.Instance.DrawString("Forced center: " + mouseCentered, new Point(20, 60), Color.Black);
 
             GraphicsManager.Instance.SwapBuffers();
