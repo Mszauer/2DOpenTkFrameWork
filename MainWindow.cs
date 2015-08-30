@@ -41,10 +41,10 @@ namespace ConsoleApplication1 {
         }
 
         public void SetMousePosition(Point newPos) {
-
+            InputManager.Instance.SetMousePosition(newPos);
         }
         public void CenterMouse() {
-
+            InputManager.Instance.CenterMouse();
         }
 
         public bool MouseDown(OpenTK.Input.MouseButton button) {
