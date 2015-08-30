@@ -8,6 +8,26 @@ namespace ConsoleApplication1 {
     class MainWindow {
         public static OpenTK.GameWindow Window = null; //reference to OpenTK window
 
+        public static int MouseX {
+            get {
+                return;
+            }
+        }
+        public static int MouseY {get;}
+        public Point MousePosition{get;}
+
+        public float MouseDeltaX { get; }
+        public float MouseDeltaY { get; }
+        public PointF MouseDelta { get; }
+
+        public void SetMousePosition(Point newPos);
+        public void CenterMouse();
+
+        public bool MouseDown(OpenTK.Input.MouseButton button);
+        public bool MouseUp(OpenTK.Input.MouseButton button);
+        public bool MousePressed(OpenTK.Input.MouseButton button);
+        public bool MouseReleased(OpenTK.Input.MouseButton button);
+
         public static void Initialize(object sender, EventArgs e) {
             GraphicsManager.Instance.Initialize(Window);
             InputManager.Instance.Initialize(Window);
@@ -20,6 +40,7 @@ namespace ConsoleApplication1 {
             int FPS = System.Convert.ToInt32(1.0 / e.Time);
             GraphicsManager.Instance.DrawString("FPS: " + FPS, new Point(5, 5), Color.Black);
             GraphicsManager.Instance.DrawString("FPS: " + FPS, new Point(4, 4), Color.White);
+            GraphicsManager.Instance.DrawString("Mouse X: " + MouseX + " Y: " + MouseY, new Point(8,8), Color.Black);
 
             GraphicsManager.Instance.SwapBuffers();
         }
