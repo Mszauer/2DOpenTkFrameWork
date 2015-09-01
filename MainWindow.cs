@@ -27,10 +27,10 @@ namespace ConsoleApplication1 {
                     currentColor = 0;
                 }
             }
-            if (InputManager.Instance.BPressed(1)) {
+            if (InputManager.Instance.BPressed(0)) {
                 currentColor -= 1;
-                if (currentColor < 0) {
-                    currentColor = colors.Length;
+                if (currentColor <= 0) {
+                    currentColor = colors.Length-1;
                 }
             }
             if (InputManager.Instance.LeftStickX(0) < 0) { // < 0 = left
@@ -63,14 +63,14 @@ namespace ConsoleApplication1 {
             }
             else if (!InputManager.Instance.HasBButton(0)) {
                 GraphicsManager.Instance.DrawString("B button not mapped, press B button", new PointF(10, 10), Color.Red);
-                JoystickButton newBButton = JoystickButton.Button0;
-                if (InputManager.Instance.GetButton(0, ref newBButton)) {
+                JoystickButton newBButton = JoystickButton.Button1;
+                if (InputManager.Instance.GetButton(0, ref newBButton,InputManager.Instance.GetMapping(0).A)) {
                     InputManager.Instance.GetMapping(0).B = newBButton;
                 }
             }
             else if (!InputManager.Instance.HasDPad(0)) {
             }
-            else if (!InputManager.Instance.HasLeftStick(0)) {
+            /*else if (!InputManager.Instance.HasLeftStick(0)) {
                 InputManager.ControllerMapping map = InputManager.Instance.GetMapping(0);
 
                 if (!map.HasLeftAxisX) {
@@ -91,6 +91,7 @@ namespace ConsoleApplication1 {
                     }
                 }
             }
+             */
             else {
                 GraphicsManager.Instance.DrawRect(position, colors[currentColor]);
             }
