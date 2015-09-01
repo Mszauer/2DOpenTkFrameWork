@@ -33,6 +33,19 @@ namespace ConsoleApplication1 {
                     currentColor = colors.Length-1;
                 }
             }
+            if (InputManager.Instance.UpDown(0)) {
+                position.Y -= 80.0f *  (float)e.Time;
+            }
+            if (InputManager.Instance.DownDown(0)) {
+                position.Y += 80.0f * (float)e.Time;
+            }
+            if (InputManager.Instance.LeftDown(0)) {
+                position.X -= 80.0f * (float)e.Time;
+            }
+            if (InputManager.Instance.RightDown(0)) {
+                position.X += 80.0f * (float)e.Time;
+            }
+            /*
             if (InputManager.Instance.LeftStickX(0) < 0) { // < 0 = left
                 position.X -= 80.0f * Math.Abs(InputManager.Instance.LeftStickX(0)) * (float)e.Time;
             }
@@ -46,6 +59,7 @@ namespace ConsoleApplication1 {
             else if (InputManager.Instance.LeftStickY(0) > 0) { // y > 0 = up
                 position.Y -= 80.0f * Math.Abs(InputManager.Instance.LeftStickY(0)) * (float)e.Time;
             }
+             */
 
             InputManager.Instance.Update();
         }
@@ -79,21 +93,21 @@ namespace ConsoleApplication1 {
                 GraphicsManager.Instance.DrawString("Down not found, press Down", new PointF(10, 10), Color.Red);
                 JoystickButton newDownButton = JoystickButton.Button3;
                 if (InputManager.Instance.GetButton(0, ref newDownButton, InputManager.Instance.GetMapping(0).A, InputManager.Instance.GetMapping(0).B,InputManager.Instance.GetMapping(0).Up)) {
-                    InputManager.Instance.GetMapping(0).Up = newDownButton;
+                    InputManager.Instance.GetMapping(0).Down = newDownButton;
                 }
             }
             else if (!InputManager.Instance.GetMapping(0).HasLeft) {
                 GraphicsManager.Instance.DrawString("Down not found, press Down", new PointF(10, 10), Color.Red);
                 JoystickButton newLeftButton = JoystickButton.Button4;
                 if (InputManager.Instance.GetButton(0, ref newLeftButton, InputManager.Instance.GetMapping(0).A, InputManager.Instance.GetMapping(0).B,InputManager.Instance.GetMapping(0).Up,InputManager.Instance.GetMapping(0).Down)) {
-                    InputManager.Instance.GetMapping(0).Up = newLeftButton;
+                    InputManager.Instance.GetMapping(0).Left = newLeftButton;
                 }
             }
             else if (!InputManager.Instance.GetMapping(0).HasRight) {
                 GraphicsManager.Instance.DrawString("Down not found, press Down", new PointF(10, 10), Color.Red);
                 JoystickButton newRightButton = JoystickButton.Button5;
                 if (InputManager.Instance.GetButton(0, ref newRightButton, InputManager.Instance.GetMapping(0).A, InputManager.Instance.GetMapping(0).B,InputManager.Instance.GetMapping(0).Up,InputManager.Instance.GetMapping(0).Down,InputManager.Instance.GetMapping(0).Left)) {
-                    InputManager.Instance.GetMapping(0).Up = newRightButton;
+                    InputManager.Instance.GetMapping(0).Right = newRightButton;
                 }
             }
             /*else if (!InputManager.Instance.HasLeftStick(0)) {
