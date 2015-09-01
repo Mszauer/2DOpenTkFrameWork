@@ -68,6 +68,8 @@ namespace ConsoleApplication1 {
                     InputManager.Instance.GetMapping(0).B = newBButton;
                 }
             }
+            else if (!InputManager.Instance.HasDPad(0)) {
+            }
             else if (!InputManager.Instance.HasLeftStick(0)) {
                 InputManager.ControllerMapping map = InputManager.Instance.GetMapping(0);
 
