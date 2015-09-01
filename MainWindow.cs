@@ -69,6 +69,24 @@ namespace ConsoleApplication1 {
                 }
             }
             else if (!InputManager.Instance.HasDPad(0)) {
+                InputManager.ControllerMapping map = InputManager.Instance.GetMapping(0);
+
+                if (!map.HasUp) {
+                    GraphicsManager.Instance.DrawString("Up not found, press up", new PointF(10, 10), Color.Red);
+                }
+                else if (!map.HasDown) {
+                    GraphicsManager.Instance.DrawString("Down not found, press Down", new PointF(10, 10), Color.Red);
+                }
+                else if (!map.HasLeft) {
+                    GraphicsManager.Instance.DrawString("Down not found, press Down", new PointF(10, 10), Color.Red);
+                }
+                else if (!map.HasRight) {
+                    GraphicsManager.Instance.DrawString("Down not found, press Down", new PointF(10, 10), Color.Red);
+                }
+                JoystickButton newDpadButton = JoystickButton.Button2;
+                if (map.HasUp) {
+                    if (InputManager.Instance.GetMapping(0).Up)
+                }
             }
             /*else if (!InputManager.Instance.HasLeftStick(0)) {
                 InputManager.ControllerMapping map = InputManager.Instance.GetMapping(0);
