@@ -10,152 +10,37 @@ namespace ConsoleApplication1 {
     class MainWindow {
         public static OpenTK.GameWindow Window = null; //reference to OpenTK window
 
-        private static RectangleF position = new RectangleF(100, 100, 20, 20);
-        private static Color[] colors = new Color[] { Color.Red, Color.Blue, Color.Green, Color.Yellow };
-        private static int currentColor = 0;
+        static int sound1 = -1;
+        static int sound2 = -1;
 
         public static void Initialize(object sender, EventArgs e) {
-            GraphicsManager.Instance.Initialize(Window);
-            InputManager.Instance.Initialize(Window);
+            SoundManager.Instance.Initialize(Window);
 
+            sound1 = SoundManager.Instance.LoadMp3("Assets/BGMusic.mp3");
+            sound2 = SoundManager.Instance.LoadWav("Assets/SampleSound.wav");
+
+            SoundManager.Instance.PlaySound(sound2);
         }
         public static void Update(object sender, FrameEventArgs e) {
-            InputManager.Instance.Update();
-            if (InputManager.Instance.APressed(0)) {
-                currentColor += 1;
-                if (currentColor >= colors.Length) {
-                    currentColor = 0;
-                }
-            }
-            if (InputManager.Instance.BPressed(0)) {
-                currentColor -= 1;
-                if (currentColor <= 0) {
-                    currentColor = colors.Length-1;
-                }
-            }
-            if (InputManager.Instance.UpDown(0)) {
-                position.Y -= 80.0f *  (float)e.Time;
-            }
-            if (InputManager.Instance.DownDown(0)) {
-                position.Y += 80.0f * (float)e.Time;
-            }
-            if (InputManager.Instance.LeftDown(0)) {
-                position.X -= 80.0f * (float)e.Time;
-            }
-            if (InputManager.Instance.RightDown(0)) {
-                position.X += 80.0f * (float)e.Time;
-            }
-            /*
-            if (InputManager.Instance.LeftStickX(0) < 0) { // < 0 = left
-                position.X -= 80.0f * Math.Abs(InputManager.Instance.LeftStickX(0)) * (float)e.Time;
-            }
-            else if (InputManager.Instance.LeftStickX(0) > 0) { // < 0 = right
-                position.X += 80.0f * Math.Abs(InputManager.Instance.LeftStickX(0)) * (float)e.Time;
+            if (!SoundManager.Instance.IsPlaying(sound1) && !SoundManager.Instance.IsPlaying(sound2)) {
+                Console.WriteLine("LOOP");
+                SoundManager.Instance.PlaySound(sound1);
             }
 
-            if (InputManager.Instance.LeftStickY(0) < 0) { // y < 0 = down
-                position.Y += 80.0f * Math.Abs(InputManager.Instance.LeftStickY(0)) * (float)e.Time;
+            float volume = SoundManager.Instance.GetVolume(sound1);
+            if (volume > 0.0f) {
+                volume -= 0.25f;
+                SoundManager.Instance.SetVolume(sound1, volume);
             }
-            else if (InputManager.Instance.LeftStickY(0) > 0) { // y > 0 = up
-                position.Y -= 80.0f * Math.Abs(InputManager.Instance.LeftStickY(0)) * (float)e.Time;
-            }
-             */
-
-            InputManager.Instance.Update();
         }
         public static void Render(object sender, FrameEventArgs e) {
-            GraphicsManager.Instance.ClearScreen(Color.CadetBlue);
-            if (!InputManager.Instance.IsConnected(0)) {
-                GraphicsManager.Instance.DrawString("Please connect a controller", new PointF(10,10),Color.Red);
-            }
-            else if(!InputManager.Instance.HasAButton(0)){
-                GraphicsManager.Instance.DrawString("A button not mapped, press A button", new PointF(10, 10), Color.Red);
-                JoystickButton newAButton = JoystickButton.Button0;
-                if (InputManager.Instance.GetButton(0, ref newAButton)) {
-                    InputManager.Instance.GetMapping(0).A = newAButton;
-                }
-            }
-            else if (!InputManager.Instance.HasBButton(0)) {
-                GraphicsManager.Instance.DrawString("B button not mapped, press B button", new PointF(10, 10), Color.Red);
-                JoystickButton newBButton = JoystickButton.Button1;
-                if (InputManager.Instance.GetButton(0, ref newBButton,InputManager.Instance.GetMapping(0).A)) {
-                    InputManager.Instance.GetMapping(0).B = newBButton;
-                }
-            }
-            else if (!InputManager.Instance.GetMapping(0).HasUp) {
-                GraphicsManager.Instance.DrawString("Up not found, press up", new PointF(10, 10), Color.Red);
-                JoystickButton newUpButton = JoystickButton.Button2;
-                if (InputManager.Instance.GetButton(0, ref newUpButton, InputManager.Instance.GetMapping(0).A, InputManager.Instance.GetMapping(0).B)) {
-                    InputManager.Instance.GetMapping(0).Up = newUpButton;
-                }
-            }
-            else if (!InputManager.Instance.GetMapping(0).HasDown) {
-                GraphicsManager.Instance.DrawString("Down not found, press Down", new PointF(10, 10), Color.Red);
-                JoystickButton newDownButton = JoystickButton.Button3;
-                if (InputManager.Instance.GetButton(0, ref newDownButton, InputManager.Instance.GetMapping(0).A, InputManager.Instance.GetMapping(0).B,InputManager.Instance.GetMapping(0).Up)) {
-                    InputManager.Instance.GetMapping(0).Down = newDownButton;
-                }
-            }
-            else if (!InputManager.Instance.GetMapping(0).HasLeft) {
-                GraphicsManager.Instance.DrawString("Down not found, press Down", new PointF(10, 10), Color.Red);
-                JoystickButton newLeftButton = JoystickButton.Button4;
-                if (InputManager.Instance.GetButton(0, ref newLeftButton, InputManager.Instance.GetMapping(0).A, InputManager.Instance.GetMapping(0).B,InputManager.Instance.GetMapping(0).Up,InputManager.Instance.GetMapping(0).Down)) {
-                    InputManager.Instance.GetMapping(0).Left = newLeftButton;
-                }
-            }
-            else if (!InputManager.Instance.GetMapping(0).HasRight) {
-                GraphicsManager.Instance.DrawString("Down not found, press Down", new PointF(10, 10), Color.Red);
-                JoystickButton newRightButton = JoystickButton.Button5;
-                if (InputManager.Instance.GetButton(0, ref newRightButton, InputManager.Instance.GetMapping(0).A, InputManager.Instance.GetMapping(0).B,InputManager.Instance.GetMapping(0).Up,InputManager.Instance.GetMapping(0).Down,InputManager.Instance.GetMapping(0).Left)) {
-                    InputManager.Instance.GetMapping(0).Right = newRightButton;
-                }
-            }
-            /*else if (!InputManager.Instance.HasLeftStick(0)) {
-                InputManager.ControllerMapping map = InputManager.Instance.GetMapping(0);
 
-                if (!map.HasLeftAxisX) {
-                    GraphicsManager.Instance.DrawString("X axis is not found, move left stick horizontally", new PointF(10, 10), Color.Red);
-                }
-                else if (!map.HasLeftAxisY) {
-                    GraphicsManager.Instance.DrawString("Y axis is not mouve, move left stick vertically", new PointF(10, 10), Color.Red);
-                }
-                JoystickAxis newAxis = JoystickAxis.Axis0;
-                if (map.HasLeftAxisX) {
-                    if (InputManager.Instance.GetAxis(0, ref newAxis, map.LeftAxisX)) {
-                        map.LeftAxisY = newAxis;
-                    }
-                }
-                else {
-                    if (InputManager.Instance.GetAxis(0, ref newAxis)) {
-                        map.LeftAxisX = newAxis;
-                    }
-                }
-            }
-             */
-            else {
-                GraphicsManager.Instance.DrawRect(position, colors[currentColor]);
-            }
-            int y = 0;
-            JoystickState state = Joystick.GetState(0);
-            InputManager.ControllerMapping buttons = InputManager.Instance.GetMapping(0);
-            foreach (JoystickAxis enumVal in Enum.GetValues(typeof(JoystickAxis))) {
-                Color clr = Color.Black;
-                if (enumVal == buttons.LeftAxisX) {
-                    clr = Color.Purple;
-                }
-                if (enumVal == buttons.LeftAxisY) {
-                    clr = Color.Blue;
-                }
-                GraphicsManager.Instance.DrawString(enumVal.ToString() + ": " + state.GetAxis(enumVal), new PointF(10,30+y),clr);
-                y += 20;
-            }
-            GraphicsManager.Instance.DrawRect(position, colors[currentColor]);
-
-            GraphicsManager.Instance.SwapBuffers();
         }
         public static void Shutdown(object sender, EventArgs e) {
-            InputManager.Instance.Shutdown();
-            GraphicsManager.Instance.Shutdown();
+            SoundManager.Instance.UnloadSound(sound1);
+            SoundManager.Instance.UnloadSound(sound2);
+
+            SoundManager.Instance.Initialize(Window);
         }
         [STAThread]
         public static void Main() {
