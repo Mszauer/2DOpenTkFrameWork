@@ -7,40 +7,39 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace ConsoleApplication1 {
-    class MainWindow {
+    class GameSingleton {
         public static OpenTK.GameWindow Window = null; //reference to OpenTK window
 
-        static int sound1 = -1;
-        static int sound2 = -1;
-
         public static void Initialize(object sender, EventArgs e) {
+            GraphicsManager.Instance.Initialize(Window);
+            TextureManager.Instance.Initialize(Window);
             SoundManager.Instance.Initialize(Window);
+            InputManager.Instance.Initialize(Window);
 
-            sound1 = SoundManager.Instance.LoadMp3("Assets/BGMusic.mp3");
-            sound2 = SoundManager.Instance.LoadWav("Assets/SampleSound.wav");
-
-            SoundManager.Instance.PlaySound(sound2);
+            GameSingleton.Instance.Initialize();
         }
         public static void Update(object sender, FrameEventArgs e) {
-            if (!SoundManager.Instance.IsPlaying(sound1) && !SoundManager.Instance.IsPlaying(sound2)) {
-                Console.WriteLine("LOOP");
-                SoundManager.Instance.PlaySound(sound1);
-            }
-
-            float volume = SoundManager.Instance.GetVolume(sound1);
-            if (volume > 0.0f) {
-                volume -= 0.25f;
-                SoundManager.Instance.SetVolume(sound1, volume);
-            }
+            InputManager.Instance.Update();
+            Game.Instance.Update((float)e.Time);
         }
         public static void Render(object sender, FrameEventArgs e) {
+            GraphicsManager.Instance.ClearScreen(Color.CadetBlue);
 
+            Game.Instance.Render();
+
+            int FPS = System.Convert.ToInt32(1.0 / e.Time);
+            GraphicsManager.Instance.DrawString("FPS: " + FPS, new PointF(5, 5), Color.Black);
+            GraphicsManager.Instance.DrawString("FPS: " + FPS, new PointF(4, 4), Color.White);
+
+            GraphicsManager.Instance.SwapBuffers();
         }
         public static void Shutdown(object sender, EventArgs e) {
-            SoundManager.Instance.UnloadSound(sound1);
-            SoundManager.Instance.UnloadSound(sound2);
+            Game.Instance.Shutdown();
 
-            SoundManager.Instance.Initialize(Window);
+            InputManager.Instance.Shutdown();
+            SoundManager.Instance.Shutdown();
+            TextureManager.Instance.Shutdown();
+            GraphicsManager.Instance.Shutdown();
         }
         [STAThread]
         public static void Main() {
