@@ -16,7 +16,7 @@ namespace Skeleton {
             SoundManager.Instance.Initialize(Window);
             InputManager.Instance.Initialize(Window);
 
-            GameSingleton.Instance.Initialize();
+            Game.Instance.Initialize();
         }
         public static void Update(object sender, FrameEventArgs e) {
             InputManager.Instance.Update();
