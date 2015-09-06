@@ -4,20 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApplication1 {
-    class GameSingleton {
-        private static GameSingleton instance = null;
+namespace Skeleton {
+    class Game {
+        private static Game instance = null;
 
-        public static GameSingleton Instance {
+        public static Game Instance {
             get {
                 if (instance == null) {
-                    instance = new GameSingleton();
+                    instance = new Game();
                 }
                 return instance;
             }
         }
 
-        private GameSingleton(){
+        private Game(){
 
         }
         public void Initialize(){

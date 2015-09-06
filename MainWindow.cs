@@ -6,8 +6,8 @@ using GameFramework;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace ConsoleApplication1 {
-    class GameSingleton {
+namespace Skeleton {
+    class Program {
         public static OpenTK.GameWindow Window = null; //reference to OpenTK window
 
         public static void Initialize(object sender, EventArgs e) {
